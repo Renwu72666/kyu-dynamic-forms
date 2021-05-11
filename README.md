@@ -1,2 +1,2 @@
-# -kyu-dynamic-forms
+# kyu-dynamic-forms
 Based on reactive forms.

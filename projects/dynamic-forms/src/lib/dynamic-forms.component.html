@@ -1,0 +1,26 @@
+<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+  <mat-accordion  class="example-box" *ngFor="let movie of movies" cdkDrag >
+    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false" >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{movie}}
+        </mat-panel-title>
+        <mat-panel-description>
+          <!-- description -->
+          <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+    <br/>
+  </mat-accordion>
+</div>
+
+<!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+  <div class="example-box" *ngFor="let movie of movies" cdkDrag>
+    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+    {{movie}}
+  </div>
+</div> -->

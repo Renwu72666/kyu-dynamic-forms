@@ -1,21 +1,38 @@
-<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-  <mat-accordion  class="example-box" *ngFor="let movie of movies" cdkDrag >
-    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                        (closed)="panelOpenState = false" >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{movie}}
-        </mat-panel-title>
-        <mat-panel-description>
-          <!-- description -->
-          <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>I'm visible because I am open</p>
-    </mat-expansion-panel>
-    <br/>
-  </mat-accordion>
+<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" [cdkDropListData]="t.controls">
+  <form [formGroup]="dynamicForm" >
+    <mat-accordion  class="example-box" *ngFor="let ticket of t.controls; let i = index" cdkDrag>
+      <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+                          (closed)="panelOpenState = false" >
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{ i }} </mat-panel-title>
+          <mat-panel-description> items {{ i }} </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="list-group list-group-flush">
+            <div class="list-group-item">
+                <h5 class="card-title">Members {{i + 1}}</h5>
+                <div [formGroup]="ticket" class="form-row">
+                    <div class="form-group col-6">
+                        <!-- <label>Name:  </label> -->
+                        <mat-form-field class="example-form-field">
+                          <mat-label>Name:  </mat-label>
+                          <input matInput type="text" formControlName="name">
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group col-6">
+                        <!-- <label>Email</label> -->
+                        <mat-form-field class="example-form-field">
+                          <mat-label>Email:  </mat-label>
+                          <input matInput type="text" formControlName="email">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <button class="btn btn-primary mr-1" (click)="onSubmit()" >console Tickets</button>
+  </form>
 </div>
 
 <!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">

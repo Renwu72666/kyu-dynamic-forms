@@ -31,13 +31,8 @@
           </div>
       </mat-expansion-panel>
     </mat-accordion>
-    <button class="btn btn-primary mr-1" (click)="onSubmit()" >console Tickets</button>
+    <div class="example-button-row">
+      <button mat-raised-button color="primary" (click)="onSubmit()">confirm</button>
+    </div>
   </form>
 </div>
-
-<!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-  <div class="example-box" *ngFor="let movie of movies" cdkDrag>
-    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-    {{movie}}
-  </div>
-</div> -->

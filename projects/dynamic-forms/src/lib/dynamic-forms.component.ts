@@ -17,49 +17,58 @@ export class DynamicFormsComponent implements OnInit {
   public outer: FormGroup;
 
   /**
-   *Choose inpunt amount
+   *Choose input amount
    *
    * @type number
   */
-   @Input() num: number;
+  @Input() num: number;
 
-   @Input() data: unknown;
+  /**
+   *Choose input data
+   *
+   * @type unknown
+  */
+  @Input() data: unknown;
 
-   submitted = false;
-
-  //  @Output() formData: unknown;
+  /**
+   *Choose output formData
+   *
+   * @type EventEmitter<unknown> 
+  */
   @Output() formData: EventEmitter<unknown> =new EventEmitter<unknown>();
 
-  movies = [
-    'Episode I - The Phantom Menace',
-    'Episode II - Attack of the Clones',
-    'Episode III - Revenge of the Sith',
-    'Episode IV - A New Hope',
-  ];
+  /**
+   * boolean submitted
+   *
+   * @type boolean 
+  */
+  submitted = false;
 
   constructor(
     private _formBuilder: FormBuilder,
   ) {
+    // Defined formBuilder
     this.dynamicForm = this._formBuilder.group({
-      numberOfTickets: ['', Validators.required],
+      memberOfInfo: ['', Validators.required],
       tickets: new FormArray([])
     });
   }
-  // convenience getters for easy access to form fields
+
+  // getters form fields
   get f() { return this.dynamicForm.controls; }
   get t() { return this.f.tickets as FormArray; }
 
   onChangeTickets(e) {
-    const numberOfTickets = e//e.target.value || 0;
-    if (this.t.length < numberOfTickets) {
-        for (let i = this.t.length; i < numberOfTickets; i++) {
+    const memberOfInfo = e; //e.target.value || 0;
+    if (this.t.length < memberOfInfo) {
+        for (let i = this.t.length; i < memberOfInfo; i++) {
             this.t.push(this._formBuilder.group({
                 name: ['', Validators.required],
                 email: ['', [Validators.required, Validators.email]]
             }));
         }
     } else {
-        for (let i = this.t.length; i >= numberOfTickets; i--) {
+        for (let i = this.t.length; i >= memberOfInfo; i--) {
             this.t.removeAt(i);
         }
     }
@@ -67,19 +76,6 @@ export class DynamicFormsComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.formData.emit(this.t.controls);
-
-    // console.log(this.dynamicForm.value)
-    // console.log(this.t.controls[0].value)
-    // console.log(this.t.controls[1].value)
-
-    // stop here if form is invalid
-    // if (this.dynamicForm.invalid) {
-    //     return;
-    // }
-
-    // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.t.value, null, 4));
-    // display form values on success
-    // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.dynamicForm.value, null, 4));
 }
 
   public contentForm( name: string = '' , phone: string = '' ) {
@@ -92,30 +88,11 @@ export class DynamicFormsComponent implements OnInit {
   ngOnInit(): void {
     this.onChangeTickets(this.num);
     this.formData.emit(this.t.controls);
-
-    // this.formData = this.t.controls;
-    // console.log(this.num)
-    // this.dynamicForm = this._formBuilder.group({
-    //   listData: [this.contentForm()]
-    //   // inputName: [''],
-    //   // inputPhone: ['']
-    //   // list: new FormArray([])
-    // });
-    // for( let i = 0 ; i< this.num ; i++ ) {
-    //   (this.dynamicForm.get('contacts') as FormArray).push(this.contentForm());
-    // }
-    // console.log(this.dynamicForm)
-    // console.log(this.dynamicForm.controls)
-    // this.dynamicForm = this._formBuilder.group({
-    //   attachmentImgGroup: new FormArray([])
-    // });
   }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.t.controls, event.previousIndex, event.currentIndex);
     this.formData.emit(this.t.controls);
-
-    // this.formData = this.t.controls;
   }
 
 }
